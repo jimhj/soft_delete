@@ -4,7 +4,7 @@ module ActiveRecord
     EPOCH_DATE = Time.local(1970, 1, 1)
 
     included do
-      default_scope where(:deleted_at => EPOCH_DATE)
+      default_scope { where(:deleted_at => EPOCH_DATE) }
     end
 
     module ClassMethods
@@ -96,8 +96,8 @@ module ActiveRecord
     # Mark the model deleted_at as now.
     def destroy_without_callbacks
       primary_key = self.class.primary_key
-      self.class.update_all({:deleted_at => current_time_from_proper_timezone},
-                            {primary_key => self[primary_key]})
+      self.class.update_all({ :deleted_at => current_time_from_proper_timezone },
+                            { primary_key => self[primary_key] })
     end
 
   end
